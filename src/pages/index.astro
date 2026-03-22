@@ -1,0 +1,162 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/layout/Header.astro';
+import Footer from '@components/layout/Footer.astro';
+import Hero from '@components/sections/Hero.astro';
+import SocialProof from '@components/sections/SocialProof.astro';
+import Services from '@components/sections/Services.astro';
+import Gallery from '@components/sections/Gallery.astro';
+import About from '@components/sections/About.astro';
+import Testimonials from '@components/sections/Testimonials.astro';
+import FAQ from '@components/sections/FAQ.astro';
+import CTA from '@components/sections/CTA.astro';
+import Contact from '@components/sections/Contact.astro';
+import { getSiteInfo, getFaq } from '@data/content';
+import { legal, geo } from '@data/business';
+
+const siteInfo = getSiteInfo();
+const faqItems = getFaq();
+
+// Schema.org — Electrician (LocalBusiness)
+const electricianSchema = {
+  "@context": "https://schema.org",
+  "@type": "Electrician",
+  "name": siteInfo.name,
+  "image": `${siteInfo.siteUrl}/images/og-image.jpg`,
+  "description": siteInfo.metaDescription,
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": siteInfo.address,
+    "addressLocality": siteInfo.city,
+    "postalCode": siteInfo.postalCode,
+    "addressRegion": siteInfo.region,
+    "addressCountry": "FR"
+  },
+  "telephone": `+${siteInfo.whatsapp}`,
+  "email": siteInfo.email,
+  "url": siteInfo.siteUrl,
+  ...(legal.siret && { "taxID": legal.siret }),
+  "founder": {
+    "@type": "Person",
+    "name": "Anthony Marques",
+    "jobTitle": "Électricien"
+  },
+  "foundingDate": "2024",
+  "openingHoursSpecification": [{
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+    "opens": "08:00",
+    "closes": "19:00"
+  }],
+  "priceRange": "€ à €€",
+  ...(geo.lat !== 0 && { "geo": { "@type": "GeoCoordinates", "latitude": geo.lat, "longitude": geo.lon } }),
+  "areaServed": [
+    { "@type": "City", "name": "Grenoble" },
+    { "@type": "AdministrativeArea", "name": "Nord Isère" }
+  ],
+  "knowsAbout": [
+    "Installation électrique", "Rénovation tableau électrique", "Mise aux normes NFC 15-100",
+    "Climatisation réversible", "Courant faible", "Vidéosurveillance", "Alarme",
+    "Réseau informatique", "Dépannage électrique", "Maintenance électrique tertiaire"
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Prestations AM Électricité",
+    "itemListElement": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Installation électrique", "description": "Création complète de réseaux électriques pour constructions neuves ou extensions, conforme à la norme NFC 15-100." }},
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Rénovation de tableau électrique", "description": "Remplacement de tableaux vétustes par un équipement moderne et sécurisé aux normes." }},
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Mise aux normes NFC 15-100", "description": "Diagnostic complet et travaux de mise en conformité des installations électriques existantes." }},
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Climatisation", "description": "Installation de systèmes de climatisation réversible Mitsubishi Electric, LG et Daikin." }},
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Courant faible", "description": "Installation d'alarmes, vidéosurveillance et réseaux informatiques pour particuliers et professionnels." }},
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Dépannage et maintenance", "description": "Intervention rapide sur pannes électriques et contrats de maintenance pour le tertiaire." }}
+    ]
+  }
+};
+
+// Schema.org — FAQPage
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqItems.map(item => ({
+    "@type": "Question",
+    "name": item.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.answer
+    }
+  }))
+};
+
+// Schema.org — WebSite
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": siteInfo.name,
+  "url": siteInfo.siteUrl,
+  "description": siteInfo.metaDescription
+};
+
+// Schema.org — BreadcrumbList
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Accueil",
+    "item": siteInfo.siteUrl
+  }]
+};
+---
+
+<BaseLayout>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(electricianSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  </Fragment>
+
+  <Header slot="header" />
+
+  <!-- Flux de conversion : Hero → Preuve sociale → Services → Galerie → À propos → Témoignages → FAQ → CTA → Contact -->
+  <!-- Alternance fonds : primary-950 → accent-400 → white → neutral-50 → white → primary-800 → neutral-50 → primary-950 → white -->
+
+  <Hero />
+  <SocialProof />
+  <Services />
+  <Gallery />
+  <About />
+  <Testimonials />
+  <FAQ />
+  <CTA />
+  <Contact />
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<!-- Sticky mobile CTA -->
+<div class="fixed bottom-0 left-0 right-0 z-30 lg:hidden bg-white/95 backdrop-blur-sm border-t border-neutral-200 px-4 py-3 safe-area-pb">
+  <div class="flex gap-2 max-w-lg mx-auto">
+    <a
+      href={`tel:+${siteInfo.whatsapp}`}
+      class="flex-1 inline-flex items-center justify-center gap-2 bg-primary-700 text-white font-bold py-3 px-4 rounded-lg hover:bg-primary-800 transition-all min-h-[44px] text-sm"
+      aria-label={`Appeler le ${siteInfo.phone}`}
+    >
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+      Appeler
+    </a>
+    <a
+      href="#contact"
+      class="flex-1 inline-flex items-center justify-center bg-accent-400 text-secondary-950 font-bold py-3 px-4 rounded-lg hover:bg-accent-500 transition-all min-h-[44px] text-sm"
+    >
+      Devis gratuit
+    </a>
+  </div>
+</div>
+
+<style>
+  .safe-area-pb {
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  }
+</style>

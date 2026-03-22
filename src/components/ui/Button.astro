@@ -1,0 +1,53 @@
+---
+interface Props {
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'whatsapp';
+  size?: 'sm' | 'md' | 'lg';
+  href?: string;
+  type?: 'button' | 'submit';
+  class?: string;
+  target?: string;
+  rel?: string;
+  ariaLabel?: string;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  type = 'button',
+  class: className = '',
+  target,
+  rel,
+  ariaLabel,
+} = Astro.props;
+
+const baseClasses = 'inline-flex items-center justify-center font-bold font-body rounded-lg transition-all duration-200 cursor-pointer';
+
+const sizeClasses = {
+  sm: 'text-sm py-2 px-4 min-h-[36px]',
+  md: 'text-base py-3 px-6 min-h-[44px]',
+  lg: 'text-lg py-4 px-8 min-h-[52px]',
+};
+
+const variantClasses = {
+  primary: 'bg-accent-400 text-secondary-950 hover:bg-accent-500 hover:shadow-lg hover:-translate-y-0.5',
+  secondary: 'bg-primary-700 text-white hover:bg-primary-800 hover:shadow-lg hover:-translate-y-0.5',
+  outline: 'border-2 border-primary-600 text-primary-700 hover:bg-primary-600 hover:text-white',
+  ghost: 'text-primary-700 hover:bg-primary-50',
+  whatsapp: 'bg-[#19773E] text-white hover:bg-[#155E30] hover:shadow-lg hover:-translate-y-0.5',
+};
+
+const classes = `${baseClasses} ${sizeClasses[size]} ${variantClasses[variant]} ${className}`;
+
+const Tag = href ? 'a' : 'button';
+---
+
+{href ? (
+  <a href={href} class={classes} target={target} rel={rel} aria-label={ariaLabel}>
+    <slot />
+  </a>
+) : (
+  <button type={type} class={classes} aria-label={ariaLabel}>
+    <slot />
+  </button>
+)}

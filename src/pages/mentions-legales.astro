@@ -1,0 +1,105 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/layout/Header.astro';
+import Footer from '@components/layout/Footer.astro';
+import { getSiteInfo } from '@data/content';
+import { legal } from '@data/business';
+
+const siteInfo = getSiteInfo();
+const title = 'Mentions légales — AM Électricité';
+const description = "Mentions légales du site AM Électricité, électricien à Grenoble et Nord Isère.";
+---
+
+<BaseLayout title={title} description={description}>
+  <Header slot="header" />
+
+  <section class="py-16 md:py-24 bg-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <h1 class="font-heading font-bold text-primary-900 text-3xl md:text-4xl mb-8">Mentions légales</h1>
+
+      <div class="prose-custom space-y-8 text-neutral-700 text-base leading-relaxed">
+
+        <!-- Éditeur -->
+        <div>
+          <h2 class="font-heading font-semibold text-primary-900 text-xl mb-3">Éditeur du site</h2>
+          <p>
+            Le site <strong>am-electricite.fr</strong> est édité par :
+          </p>
+          <ul class="mt-2 space-y-1 text-sm">
+            <li><strong>Raison sociale :</strong> AM Électricité (auto-entreprise)</li>
+            <li><strong>Dirigeant / Responsable de la publication :</strong> Anthony Marques</li>
+            <li><strong>Adresse :</strong> {siteInfo.address}, {siteInfo.postalCode} {siteInfo.city}</li>
+            <li><strong>Téléphone :</strong> <a href={`tel:+${siteInfo.whatsapp}`} class="text-primary-600 hover:underline">{siteInfo.phone}</a></li>
+            <li><strong>Email :</strong> <a href={`mailto:${siteInfo.email}`} class="text-primary-600 hover:underline">{siteInfo.email}</a></li>
+            <li><strong>SIRET :</strong> {legal.siret || 'En cours d\'immatriculation'}</li>
+          </ul>
+        </div>
+
+        <!-- Hébergeur -->
+        <div>
+          <h2 class="font-heading font-semibold text-primary-900 text-xl mb-3">Hébergement</h2>
+          <p>Le site est hébergé par :</p>
+          <ul class="mt-2 space-y-1 text-sm">
+            <li><strong>Cloudflare, Inc.</strong></li>
+            <li>101 Townsend St, San Francisco, CA 94107, USA</li>
+            <li>Téléphone : +1 (650) 319-8930</li>
+            <li>Site : <a href="https://www.cloudflare.com" target="_blank" rel="noopener noreferrer" class="text-primary-600 hover:underline">cloudflare.com</a></li>
+          </ul>
+        </div>
+
+        <!-- Conception -->
+        <div>
+          <h2 class="font-heading font-semibold text-primary-900 text-xl mb-3">Conception et réalisation</h2>
+          <p>
+            Site conçu et développé par <a href="https://marcm.fr" class="text-primary-600 hover:underline" target="_blank" rel="noopener noreferrer">Marc M.</a>, spécialiste création de sites web pour artisans et entreprises locales.
+          </p>
+        </div>
+
+        <!-- Propriété intellectuelle -->
+        <div>
+          <h2 class="font-heading font-semibold text-primary-900 text-xl mb-3">Propriété intellectuelle</h2>
+          <p>
+            L'ensemble du contenu de ce site (textes, images, logos, photos de réalisations) est la propriété exclusive d'AM Électricité ou de ses partenaires. Toute reproduction, représentation, modification, publication ou adaptation de tout ou partie des éléments du site est interdite sans l'autorisation écrite préalable d'AM Électricité.
+          </p>
+        </div>
+
+        <!-- Crédits photos -->
+        <div>
+          <h2 class="font-heading font-semibold text-primary-900 text-xl mb-3">Crédits photographiques</h2>
+          <p>
+            Toutes les photographies présentées sur ce site sont des réalisations d'AM Électricité et appartiennent à Anthony Marques. Aucune image ne provient de banques d'images.
+          </p>
+        </div>
+
+        <!-- Limitation de responsabilité -->
+        <div>
+          <h2 class="font-heading font-semibold text-primary-900 text-xl mb-3">Limitation de responsabilité</h2>
+          <p>
+            AM Électricité s'efforce de fournir des informations aussi précises que possible sur ce site. Toutefois, elle ne pourra être tenue responsable des omissions, inexactitudes ou carences dans la mise à jour. Les informations sont données à titre indicatif et sont susceptibles d'évoluer.
+          </p>
+        </div>
+
+        <!-- Données personnelles -->
+        <div>
+          <h2 class="font-heading font-semibold text-primary-900 text-xl mb-3">Données personnelles</h2>
+          <p>
+            Pour toute information relative à la collecte et au traitement de vos données personnelles, veuillez consulter notre <a href="/politique-confidentialite" class="text-primary-600 hover:underline">politique de confidentialité</a>.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Back link -->
+      <div class="mt-12 pt-8 border-t border-neutral-200">
+        <a href="/" class="text-primary-700 hover:text-primary-600 font-medium text-sm transition-colors flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16l-4-4m0 0l4-4m-4 4h18"/></svg>
+          Retour à l'accueil
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>

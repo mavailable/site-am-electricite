@@ -1,0 +1,84 @@
+---
+/**
+ * Galerie — fond neutral-50, grille asymétrique (pas la même grille que Services).
+ * Photos réelles du client avec alt-text descriptif.
+ * Layout : grille irrégulière avec certaines images plus grandes.
+ */
+const photos = [
+  {
+    src: '/images/avant-apres-tableau.jpeg',
+    alt: "Rénovation d'un tableau électrique : ancien tableau vétuste à gauche, nouveau tableau Schneider aux normes à droite",
+    caption: 'Rénovation tableau — Avant / Après',
+    span: 'sm:col-span-2 sm:row-span-2',
+  },
+  {
+    src: '/images/clim-tertiaire-multi.jpeg',
+    alt: "Installation de plusieurs unités extérieures de climatisation Mitsubishi Electric sur un bâtiment tertiaire",
+    caption: 'Climatisation multi-split tertiaire',
+    span: '',
+  },
+  {
+    src: '/images/clim-lg-residentiel.jpeg',
+    alt: "Unité extérieure de climatisation LG installée sur la façade d'un immeuble résidentiel",
+    caption: 'Climatisation LG résidentiel',
+    span: '',
+  },
+  {
+    src: '/images/clim-mitsubishi-commercial.jpeg',
+    alt: "Unité extérieure Mitsubishi Electric installée sur la terrasse d'un local commercial",
+    caption: 'Mitsubishi Electric — local commercial',
+    span: '',
+  },
+  {
+    src: '/images/clim-residentiel-goulottes.jpeg',
+    alt: "Unité extérieure de climatisation avec goulottes apparentes posées proprement sur une maison",
+    caption: 'Installation soignée avec goulottes',
+    span: '',
+  },
+  {
+    src: '/images/clim-interieure-murale.jpeg',
+    alt: "Climatisation murale Mitsubishi installée dans un appartement rénové avec parquet",
+    caption: 'Unité intérieure murale',
+    span: '',
+  },
+  {
+    src: '/images/tableau-schneider.jpeg',
+    alt: "Tableau électrique Schneider en cours d'installation dans un logement neuf",
+    caption: 'Tableau Schneider — logement neuf',
+    span: '',
+  },
+];
+---
+
+<section id="realisations" class="bg-neutral-50 py-16 md:py-24">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Header centered -->
+    <div class="text-center mb-12">
+      <span class="font-body font-medium text-accent-700 text-sm tracking-wide uppercase">Portfolio</span>
+      <h2 class="font-heading font-semibold text-primary-900 text-3xl md:text-4xl mt-2 mb-3">Nos réalisations</h2>
+      <p class="text-neutral-700 text-base max-w-lg mx-auto">
+        Quelques exemples de chantiers réalisés dans la région grenobloise.
+      </p>
+    </div>
+
+    <!-- Asymmetric grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {photos.map((photo) => (
+        <figure class={`group relative overflow-hidden rounded-xl ${photo.span}`}>
+          <img
+            src={photo.src}
+            alt={photo.alt}
+            class="w-full h-full object-cover aspect-[4/3] group-hover:scale-105 transition-transform duration-500"
+            loading="lazy"
+          />
+          <!-- Caption overlay on hover -->
+          <figcaption class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary-950/80 to-transparent p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+            <p class="text-white text-sm font-medium">{photo.caption}</p>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+
+  </div>
+</section>

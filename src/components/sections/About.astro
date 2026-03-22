@@ -1,0 +1,63 @@
+---
+/**
+ * À propos — fond blanc, layout asymétrique : photo gauche + texte droite.
+ * Différent du Hero (texte gauche, photo droite) et des Services (grille de cards).
+ * Contraste : primary-900 titre, neutral-700 corps sur blanc.
+ */
+import { getSiteInfo, getAbout } from '@data/content';
+
+const siteInfo = getSiteInfo();
+const about = getAbout();
+---
+
+<section id="a-propos" class="bg-white py-16 md:py-24">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16 items-center">
+
+      <!-- Photo — takes 2/5 of the grid on large screens -->
+      <div class="lg:col-span-2">
+        <div class="relative">
+          <div class="rounded-2xl overflow-hidden shadow-lg">
+            <img
+              src="/images/portrait-anthony.jpeg"
+              alt={`Anthony Marques, fondateur d'AM Électricité à ${siteInfo.city}`}
+              class="w-full h-auto aspect-[3/4] object-cover"
+              loading="lazy"
+            />
+          </div>
+          <!-- Decorative accent block behind the image -->
+          <div class="absolute -z-10 -bottom-4 -right-4 w-full h-full bg-primary-100 rounded-2xl"></div>
+        </div>
+      </div>
+
+      <!-- Text — takes 3/5 -->
+      <article class="lg:col-span-3">
+        <span class="font-body font-medium text-accent-700 text-sm tracking-wide uppercase">Qui suis-je</span>
+        <h2 class="font-heading font-semibold text-primary-900 text-3xl md:text-4xl mt-2 mb-6">{about.sectionTitle}</h2>
+
+        <div class="space-y-4">
+          {about.paragraphs.map((paragraph) => (
+            <p class="text-neutral-700 text-base md:text-lg leading-relaxed">{paragraph}</p>
+          ))}
+        </div>
+
+        <!-- Key facts inline -->
+        <div class="mt-8 flex flex-wrap gap-4">
+          <div class="bg-primary-50 rounded-lg px-4 py-3">
+            <p class="text-primary-900 font-heading font-semibold text-lg">Bac Pro 2012</p>
+            <p class="text-neutral-700 text-xs">Systèmes Électriques Numériques</p>
+          </div>
+          <div class="bg-primary-50 rounded-lg px-4 py-3">
+            <p class="text-primary-900 font-heading font-semibold text-lg">Courant fort + faible</p>
+            <p class="text-neutral-700 text-xs">Double compétence rare</p>
+          </div>
+          <div class="bg-primary-50 rounded-lg px-4 py-3">
+            <p class="text-primary-900 font-heading font-semibold text-lg">Rives (38)</p>
+            <p class="text-neutral-700 text-xs">Bassin grenoblois + Nord Isère</p>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>

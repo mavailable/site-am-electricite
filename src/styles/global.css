@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+@theme {
+  /* Primary — Vert Forêt */
+  --color-primary-50: #F0FAF1;
+  --color-primary-100: #DCF3DE;
+  --color-primary-200: #BBE6BF;
+  --color-primary-300: #8DD494;
+  --color-primary-400: #58BB63;
+  --color-primary-500: #35A143;
+  --color-primary-600: #268434;
+  --color-primary-700: #1E6829;
+  --color-primary-800: #1C5324;
+  --color-primary-900: #18441F;
+  --color-primary-950: #0A2610;
+
+  /* Secondary — Anthracite */
+  --color-secondary-50: #F5F6F6;
+  --color-secondary-100: #E5E7E8;
+  --color-secondary-200: #CED1D3;
+  --color-secondary-300: #ABB1B4;
+  --color-secondary-400: #818A8E;
+  --color-secondary-500: #666F73;
+  --color-secondary-600: #575E62;
+  --color-secondary-700: #4A4F53;
+  --color-secondary-800: #414548;
+  --color-secondary-900: #393C3F;
+  --color-secondary-950: #1C1E20;
+
+  /* Accent — Ambre Électrique */
+  --color-accent-50: #FFFBEB;
+  --color-accent-100: #FFF3C6;
+  --color-accent-200: #FFE588;
+  --color-accent-300: #FFD24A;
+  --color-accent-400: #FFBF20;
+  --color-accent-500: #F5A307;
+  --color-accent-600: #D97B02;
+  --color-accent-700: #B55706;
+  --color-accent-800: #93430C;
+  --color-accent-900: #79380D;
+  --color-accent-950: #461C02;
+
+  /* Neutral — Gris Chaud */
+  --color-neutral-50: #F9FAFB;
+  --color-neutral-100: #F3F4F6;
+  --color-neutral-200: #E5E7EB;
+  --color-neutral-300: #D1D5DB;
+  --color-neutral-400: #9CA3AF;
+  --color-neutral-500: #6B7280;
+  --color-neutral-600: #4B5563;
+  --color-neutral-700: #374151;
+  --color-neutral-800: #1F2937;
+  --color-neutral-900: #111827;
+  --color-neutral-950: #030712;
+
+  /* WhatsApp (safe) */
+  --color-whatsapp: #19773E;
+  --color-whatsapp-hover: #155E30;
+
+  /* Typography */
+  --font-heading: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+
+  /* Border radius */
+  --radius-sm: 0.25rem;
+  --radius-DEFAULT: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+}
+
+/* Font faces — local hosting (RGPD) */
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('/fonts/space-grotesk-500.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('/fonts/space-grotesk-600.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('/fonts/space-grotesk-700.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  src: url('/fonts/dm-sans-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  src: url('/fonts/dm-sans-500.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  src: url('/fonts/dm-sans-700.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-neutral-800);
+}
+
+/* Headings — font-family only, NO color (managed per-component via Tailwind) */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}

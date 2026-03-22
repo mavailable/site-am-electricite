@@ -1,0 +1,128 @@
+---
+import '@styles/global.css';
+import { getSiteInfo } from '@data/content';
+import { umamiWebsiteId } from '@data/business';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  canonicalUrl?: string;
+  noIndex?: boolean;
+}
+
+const siteInfo = getSiteInfo();
+
+const {
+  title = siteInfo.metaTitle,
+  description = siteInfo.metaDescription,
+  ogImage = '/images/og-image.jpg',
+  canonicalUrl = siteInfo.siteUrl,
+  noIndex = false,
+} = Astro.props;
+
+const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteInfo.siteUrl}${ogImage}`;
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={fullOgImage} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content={siteInfo.name} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={fullOgImage} />
+
+    <!-- Préchargement police heading (critique pour LCP) -->
+    <link rel="preload" href="/fonts/space-grotesk-700.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#35A143" />
+
+    <!-- Slot for additional head content (Schema.org JSON-LD, etc.) -->
+    <slot name="head" />
+  </head>
+
+  <body class="bg-white text-neutral-800 antialiased">
+    <!-- Skip-to-content: first element in body, required for WCAG 2.1 AA -->
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-accent-400 focus:text-secondary-950 focus:px-4 focus:py-2 focus:rounded-lg focus:font-bold"
+    >
+      Aller au contenu principal
+    </a>
+
+    <!-- Header -->
+    <slot name="header" />
+
+    <!-- Main content -->
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <slot name="footer" />
+
+    <!-- Umami Analytics — sans cookies, pas de bannière RGPD nécessaire -->
+    {umamiWebsiteId && (
+      <script
+        defer
+        src="https://cloud.umami.is/script.js"
+        data-website-id={umamiWebsiteId}
+      />
+    )}
+
+    <!-- Conversion tracking (Umami events) -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // Track phone clicks
+        document.querySelectorAll('a[href^="tel:"]').forEach(link => {
+          link.addEventListener('click', () => {
+            if (typeof umami !== 'undefined') umami.track('phone-click');
+          });
+        });
+        // Track email clicks
+        document.querySelectorAll('a[href^="mailto:"]').forEach(link => {
+          link.addEventListener('click', () => {
+            if (typeof umami !== 'undefined') umami.track('email-click');
+          });
+        });
+        // Track WhatsApp clicks
+        document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
+          link.addEventListener('click', () => {
+            if (typeof umami !== 'undefined') umami.track('whatsapp-click');
+          });
+        });
+        // Track CTA clicks
+        document.querySelectorAll('[data-track="cta"]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            if (typeof umami !== 'undefined') umami.track('cta-click');
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
