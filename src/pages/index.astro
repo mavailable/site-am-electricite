@@ -11,11 +11,12 @@ import Testimonials from '@components/sections/Testimonials.astro';
 import FAQ from '@components/sections/FAQ.astro';
 import CTA from '@components/sections/CTA.astro';
 import Contact from '@components/sections/Contact.astro';
-import { getSiteInfo, getFaq } from '@data/content';
+import { getSiteInfo, getFaq, getTestimonials } from '@data/content';
 import { legal, geo } from '@data/business';
 
 const siteInfo = getSiteInfo();
 const faqItems = getFaq();
+const testimonials = getTestimonials();
 
 // Schema.org — Electrician (LocalBusiness)
 const electricianSchema = {
@@ -50,6 +51,19 @@ const electricianSchema = {
   }],
   "priceRange": "€ à €€",
   ...(geo.lat !== 0 && { "geo": { "@type": "GeoCoordinates", "latitude": geo.lat, "longitude": geo.lon } }),
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5",
+    "bestRating": "5",
+    "ratingCount": String(testimonials.length),
+    "reviewCount": String(testimonials.length)
+  },
+  "review": testimonials.map(t => ({
+    "@type": "Review",
+    "author": { "@type": "Person", "name": t.name },
+    "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+    "reviewBody": t.quote
+  })),
   "areaServed": [
     { "@type": "City", "name": "Grenoble" },
     { "@type": "AdministrativeArea", "name": "Nord Isère" }
