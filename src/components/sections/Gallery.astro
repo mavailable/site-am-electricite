@@ -71,10 +71,13 @@ const photos = [
             alt={photo.alt}
             class="w-full h-full object-cover aspect-[4/3] group-hover:scale-105 transition-transform duration-500"
             loading="lazy"
+            decoding="async"
+            width="600"
+            height="450"
             sizes={photo.span ? '(min-width: 640px) 66vw, 100vw' : '(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw'}
           />
-          <!-- Caption overlay on hover -->
-          <figcaption class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary-950/80 to-transparent p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+          <!-- Caption overlay — always visible on mobile, hover on desktop -->
+          <figcaption class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary-950/80 to-transparent p-4 sm:translate-y-full sm:group-hover:translate-y-0 transition-transform duration-300">
             <p class="text-white text-sm font-medium">{photo.caption}</p>
           </figcaption>
         </figure>
