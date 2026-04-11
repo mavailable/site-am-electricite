@@ -11,124 +11,38 @@ import Testimonials from '@components/sections/Testimonials.astro';
 import FAQ from '@components/sections/FAQ.astro';
 import CTA from '@components/sections/CTA.astro';
 import Contact from '@components/sections/Contact.astro';
-import { getSiteInfo, getFaq, getTestimonials } from '@data/content';
-import { legal, geo } from '@data/business';
+import { getSiteInfo } from '@data/content';
+import {
+  getLocalBusinessSchema,
+  getWebsiteSchema,
+  getFAQPageSchema,
+  getBreadcrumbSchema,
+  getSpeakableSchema,
+} from '@data/schemas';
 
 const siteInfo = getSiteInfo();
-const faqItems = getFaq();
-const testimonials = getTestimonials();
 
-// Schema.org — Electrician (LocalBusiness)
-const electricianSchema = {
-  "@context": "https://schema.org",
-  "@type": "Electrician",
-  "name": siteInfo.name,
-  "image": `${siteInfo.siteUrl}/images/og-image.jpg`,
-  "description": siteInfo.metaDescription,
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": siteInfo.address,
-    "addressLocality": siteInfo.city,
-    "postalCode": siteInfo.postalCode,
-    "addressRegion": siteInfo.region,
-    "addressCountry": "FR"
-  },
-  "telephone": `+${siteInfo.whatsapp}`,
-  "email": siteInfo.email,
-  "url": siteInfo.siteUrl,
-  ...(legal.siret && { "taxID": legal.siret }),
-  "founder": {
-    "@type": "Person",
-    "name": "Anthony Marques",
-    "jobTitle": "Électricien"
-  },
-  "foundingDate": "2024",
-  "openingHoursSpecification": [{
-    "@type": "OpeningHoursSpecification",
-    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
-    "opens": "08:00",
-    "closes": "19:00"
-  }],
-  "priceRange": "€ à €€",
-  ...(geo.lat !== 0 && { "geo": { "@type": "GeoCoordinates", "latitude": geo.lat, "longitude": geo.lon } }),
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "5",
-    "bestRating": "5",
-    "ratingCount": String(testimonials.length),
-    "reviewCount": String(testimonials.length)
-  },
-  "review": testimonials.map(t => ({
-    "@type": "Review",
-    "author": { "@type": "Person", "name": t.name },
-    "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
-    "reviewBody": t.quote
-  })),
-  "areaServed": [
-    { "@type": "City", "name": "Grenoble" },
-    { "@type": "AdministrativeArea", "name": "Nord Isère" }
-  ],
-  "knowsAbout": [
-    "Installation électrique", "Rénovation tableau électrique", "Mise aux normes NFC 15-100",
-    "Climatisation réversible", "Courant faible", "Vidéosurveillance", "Alarme",
-    "Réseau informatique", "Dépannage électrique", "Maintenance électrique tertiaire"
-  ],
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "Prestations AM Électricité",
-    "itemListElement": [
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Installation électrique", "description": "Création complète de réseaux électriques pour constructions neuves ou extensions, conforme à la norme NFC 15-100." }},
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Rénovation de tableau électrique", "description": "Remplacement de tableaux vétustes par un équipement moderne et sécurisé aux normes." }},
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Mise aux normes NFC 15-100", "description": "Diagnostic complet et travaux de mise en conformité des installations électriques existantes." }},
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Climatisation", "description": "Installation de systèmes de climatisation réversible Mitsubishi Electric, LG et Daikin." }},
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Courant faible", "description": "Installation d'alarmes, vidéosurveillance et réseaux informatiques pour particuliers et professionnels." }},
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Dépannage et maintenance", "description": "Intervention rapide sur pannes électriques et contrats de maintenance pour le tertiaire." }}
-    ]
-  }
-};
-
-// Schema.org — FAQPage
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": faqItems.map(item => ({
-    "@type": "Question",
-    "name": item.question,
-    "acceptedAnswer": {
-      "@type": "Answer",
-      "text": item.answer
-    }
-  }))
-};
-
-// Schema.org — WebSite
-const websiteSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": siteInfo.name,
-  "url": siteInfo.siteUrl,
-  "description": siteInfo.metaDescription
-};
-
-// Schema.org — BreadcrumbList
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [{
-    "@type": "ListItem",
-    "position": 1,
-    "name": "Accueil",
-    "item": siteInfo.siteUrl
-  }]
-};
+// Schemas centralises — doctrine C1 wf-00-cms §7
+const electricianSchema = getLocalBusinessSchema();
+const websiteSchema = getWebsiteSchema();
+const faqSchema = getFAQPageSchema();
+const breadcrumbSchema = getBreadcrumbSchema([
+  { name: 'Accueil', url: siteInfo.siteUrl },
+]);
+const speakableSchema = getSpeakableSchema(
+  siteInfo.metaTitle,
+  siteInfo.metaDescription,
+  siteInfo.siteUrl
+);
 ---
 
 <BaseLayout>
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(electricianSchema)} />
-    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+    {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
     <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(speakableSchema)} />
   </Fragment>
 
   <Header slot="header" />
