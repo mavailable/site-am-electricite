@@ -36,9 +36,9 @@ const about = getAbout();
       <!-- Text — takes 3/5 -->
       <article class="lg:col-span-3">
         <span class="font-body font-medium text-accent-700 text-sm tracking-wide uppercase">Qui suis-je</span>
-        <h2 class="font-heading font-semibold text-primary-900 text-3xl md:text-4xl mt-2 mb-6">{about.sectionTitle}</h2>
+        <h2 class="font-heading font-semibold text-primary-900 text-3xl md:text-4xl mt-2 mb-6" data-cms-field="about.sectionTitle" data-cms-type="text">{about.sectionTitle}</h2>
 
-        <div class="space-y-4">
+        <div class="space-y-4" data-cms-field="about.paragraphs" data-cms-type="richtext">
           {about.paragraphs.map((paragraph) => (
             <p class="text-neutral-700 text-base md:text-lg leading-relaxed">{paragraph}</p>
           ))}

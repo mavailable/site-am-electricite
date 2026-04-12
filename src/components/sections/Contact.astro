@@ -17,8 +17,8 @@ const contact = getContact();
     <!-- Header -->
     <div class="text-center mb-12">
       <span class="font-body font-medium text-accent-700 text-sm tracking-wide uppercase">Contact</span>
-      <h2 class="font-heading font-semibold text-primary-900 text-3xl md:text-4xl mt-2 mb-3">{contact.sectionTitle}</h2>
-      <p class="text-neutral-700 text-base max-w-lg mx-auto">{contact.subtitle}</p>
+      <h2 class="font-heading font-semibold text-primary-900 text-3xl md:text-4xl mt-2 mb-3" data-cms-field="contact.sectionTitle" data-cms-type="text">{contact.sectionTitle}</h2>
+      <p class="text-neutral-700 text-base max-w-lg mx-auto" data-cms-field="contact.subtitle" data-cms-type="text">{contact.subtitle}</p>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16">
@@ -142,6 +142,7 @@ const contact = getContact();
           <button
             type="submit"
             class="w-full bg-accent-400 text-secondary-950 font-bold py-3 px-6 rounded-lg hover:bg-accent-500 transition-all min-h-[44px] text-base hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
+            data-cms-field="contact.buttonText" data-cms-type="text"
           >
             {contact.buttonText}
           </button>

@@ -6,13 +6,16 @@ function readJson<T>(filePath: string): T {
   return JSON.parse(fs.readFileSync(fullPath, 'utf-8')) as T;
 }
 
-function readCollection<T>(dirPath: string): T[] {
+function readCollection<T>(dirPath: string): (T & { _slug: string })[] {
   const fullDir = path.join(process.cwd(), dirPath);
   if (!fs.existsSync(fullDir)) return [];
   return fs
     .readdirSync(fullDir)
     .filter((f) => f.endsWith('.json'))
-    .map((f) => readJson<T>(path.join(dirPath, f)));
+    .map((f) => ({
+      ...readJson<T>(path.join(dirPath, f)),
+      _slug: f.replace('.json', ''),
+    }));
 }
 
 // --- Types ---
@@ -92,19 +95,19 @@ export function getContact(): Contact {
   return readJson<Contact>('src/content/contact/index.json');
 }
 
-export function getServices(): Service[] {
+export function getServices(): (Service & { _slug: string })[] {
   return readCollection<Service>('src/content/services').sort(
     (a, b) => a.order - b.order
   );
 }
 
-export function getTestimonials(): Testimonial[] {
+export function getTestimonials(): (Testimonial & { _slug: string })[] {
   return readCollection<Testimonial>('src/content/testimonials').sort(
     (a, b) => a.order - b.order
   );
 }
 
-export function getFaq(): FaqItem[] {
+export function getFaq(): (FaqItem & { _slug: string })[] {
   return readCollection<FaqItem>('src/content/faq').sort(
     (a, b) => a.order - b.order
   );

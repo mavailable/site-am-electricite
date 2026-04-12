@@ -20,7 +20,7 @@ function getInitials(name: string): string {
 }
 ---
 
-<section class="bg-primary-800 py-16 md:py-24" aria-label="Témoignages clients">
+<section class="bg-primary-800 py-16 md:py-24" aria-label="Témoignages clients" data-cms-field="testimonials" data-cms-type="collection">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <!-- Header -->
@@ -44,7 +44,7 @@ function getInitials(name: string): string {
           </div>
 
           <!-- Quote -->
-          <blockquote class="text-neutral-700 text-sm leading-relaxed mb-6 flex-1">
+          <blockquote class="text-neutral-700 text-sm leading-relaxed mb-6 flex-1" data-cms-field={`testimonials.${t._slug}.quote`} data-cms-type="text">
             &laquo;&nbsp;{t.quote}&nbsp;&raquo;
           </blockquote>
 
@@ -54,8 +54,8 @@ function getInitials(name: string): string {
               <span class="text-primary-700 font-bold text-sm">{getInitials(t.name)}</span>
             </div>
             <div>
-              <p class="text-primary-900 font-medium text-sm">{t.name}</p>
-              <p class="text-neutral-500 text-xs">{t.context}</p>
+              <p class="text-primary-900 font-medium text-sm" data-cms-field={`testimonials.${t._slug}.name`} data-cms-type="text">{t.name}</p>
+              <p class="text-neutral-500 text-xs" data-cms-field={`testimonials.${t._slug}.context`} data-cms-type="text">{t.context}</p>
             </div>
           </div>
         </article>
