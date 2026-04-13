@@ -85,7 +85,7 @@ const web3formsKey = cmsKey || fallbackKey;
           </div>
           <div>
             <p class="text-primary-900 font-medium">Horaires</p>
-            <p class="text-neutral-700 text-sm">Lundi — Samedi : sur rendez-vous</p>
+            <p class="text-neutral-700 text-sm" data-cms-field="site-info.openingHours" data-cms-type="text">{siteInfo.openingHours || 'Lundi — Samedi : sur rendez-vous'}</p>
           </div>
         </div>
       </div>

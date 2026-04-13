@@ -33,6 +33,7 @@ const cmsConfig: CmsConfig = {
         siteUrl: { type: 'text', label: 'URL du site' },
         metaTitle: { type: 'text', label: 'Meta title' },
         metaDescription: { type: 'text', label: 'Meta description', multiline: true },
+        openingHours: { type: 'text', label: 'Horaires', multiline: true },
       },
     },
 
@@ -49,6 +50,8 @@ const cmsConfig: CmsConfig = {
         ctaSecondaryLink: { type: 'text', label: 'Bouton secondaire — lien (ex: tel:...)' },
         ctaWhatsappText: { type: 'text', label: 'Bouton WhatsApp — texte' },
         reassurance: { type: 'text', label: 'Texte de réassurance' },
+        image: { type: 'image', label: 'Photo de fond' },
+        portraitImage: { type: 'image', label: 'Photo portrait' },
       },
     },
 

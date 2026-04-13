@@ -45,7 +45,7 @@ const year = new Date().getFullYear();
       <!-- Horaires + liens légaux -->
       <div>
         <h3 class="font-heading font-semibold text-white text-lg mb-4">Horaires</h3>
-        <p class="text-neutral-300 text-sm mb-6">Lundi — Samedi : sur rendez-vous</p>
+        <p class="text-neutral-300 text-sm mb-6" data-cms-field="site-info.openingHours" data-cms-type="text">{siteInfo.openingHours || 'Lundi — Samedi : sur rendez-vous'}</p>
 
         <h3 class="font-heading font-semibold text-white text-lg mb-3">Informations légales</h3>
         <ul class="space-y-2 text-sm">
