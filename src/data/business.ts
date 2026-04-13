@@ -70,8 +70,10 @@ export const schemaData = {
   ],
 } as const;
 
-// Web3Forms API key (for contact form)
-export const web3formsKey = import.meta.env.WEB3FORMS_KEY || '';
+// Web3Forms API key — cascade: CMS content → env var → cle Marc (defaut agence)
+const WEB3FORMS_DEFAULT = '9667fcf8-c7da-4b7a-8432-0ec25215c75e';
+export const web3formsDefault = WEB3FORMS_DEFAULT;
+export const web3formsKey = import.meta.env.WEB3FORMS_KEY || WEB3FORMS_DEFAULT;
 
 // Umami Analytics
 export const umamiWebsiteId = import.meta.env.UMAMI_WEBSITE_ID || '';
