@@ -16,6 +16,20 @@ const cmsConfig: CmsConfig = {
   branch: 'dev',
   siteName: 'AM Électricité',
 
+  site: {
+    ownerName: 'Anthony Marques',
+    siteUrl: 'https://am-electricite.fr',
+    previewUrl: 'https://site-am-electricite.pages.dev',
+    clientType: 'entreprise-locale',
+    umamiSiteId: '162eaba8-7992-41eb-869d-08d2ded6ef48',
+    umamiShareUrl: 'https://cloud.umami.is/share/75a86a9a20b76321/site-am-electricite.pages.dev',
+    contactMarc: {
+      phone: '06 88 76 66 48',
+      whatsapp: '33688766648',
+      email: 'marc@muller.im',
+    },
+  },
+
   singletons: {
     'site-info': {
       label: 'Informations générales',
